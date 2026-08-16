@@ -1,0 +1,17 @@
+{
+  "name": "scanner-agent",
+  "version": "2.1.0",
+  "description": "Scanner Agent - Localhost WIA/TWAIN bridge for web applications",
+  "main": "service.js",
+  "scripts": {
+    "start": "node service.js",
+    "build": "pkg service.js --target node18-win-x64 --output dist/ScannerAgent.exe --compress GZip"
+  },
+  "pkg": {
+    "targets": ["node18-win-x64"],
+    "outputPath": "dist",
+    "compress": "GZip"
+  },
+  "keywords": ["scanner", "wia", "twain", "bridge", "selaras", "perwabkeu"],
+  "license": "Proprietary"
+}

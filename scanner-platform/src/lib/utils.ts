@@ -1,0 +1,27 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import dayjs from "dayjs";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function formatDate(dateString: string, format = "D MMM YYYY, HH:mm"): string {
+  if (!dateString) return "-";
+  try {
+    const d = dayjs(dateString);
+    if (!d.isValid()) return dateString;
+    return d.format(format);
+  } catch {
+    return dateString;
+  }
+}
+
+export function formatBytes(bytes: number, decimals = 2): string {
+  if (!bytes || bytes === 0) return "0 Bytes";
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ["Bytes", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+}

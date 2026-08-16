@@ -1,0 +1,283 @@
+{
+  "users": [
+    {
+      "id": "usr_admin",
+      "name": "Admin Scanner Platform",
+      "email": "admin@scanner.local",
+      "role": "admin",
+      "companyName": "Scanner Platform HQ",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "usr_syahroni",
+      "name": "Syahroni",
+      "email": "syahroni@selaras.com",
+      "role": "developer",
+      "companyName": "PT Selaras Teknologi Mandiri",
+      "createdAt": "2026-01-15T00:00:00.000Z"
+    }
+  ],
+  "applications": [
+    {
+      "id": "app_6zi0i8ki",
+      "name": "test",
+      "companyName": "awdawd",
+      "description": "awdawd",
+      "status": "active",
+      "createdAt": "2026-08-16T07:17:51.712Z",
+      "updatedAt": "2026-08-16T08:30:23.881Z",
+      "configuration": {
+        "id": "cfg_2ezhecvb",
+        "applicationId": "app_6zi0i8ki",
+        "executableName": "test.exe",
+        "installerName": "test-Setup.exe",
+        "defaultPort": 2019,
+        "portRangeStart": 2019,
+        "portRangeEnd": 2030,
+        "allowedOrigins": [],
+        "host": "127.0.0.1",
+        "agentVersion": "2.1.0",
+        "logLevel": "INFO",
+        "logToFile": true,
+        "enableMockDev": false,
+        "updatedAt": "2026-08-16T08:30:23.881Z"
+      },
+      "licenseId": "lic_pcpg1n9f"
+    },
+    {
+      "id": "app_selaras_2026",
+      "name": "Selaras Scanner",
+      "companyName": "PT Selaras Teknologi Mandiri",
+      "description": "Jembatan scanner dokumen fisik untuk aplikasi web Selaras.",
+      "status": "active",
+      "createdAt": "2026-01-15T08:00:00.000Z",
+      "updatedAt": "2026-08-16T08:00:00.000Z",
+      "licenseId": "lic_selaras_ent",
+      "configuration": {
+        "id": "cfg_selaras_2026",
+        "applicationId": "app_selaras_2026",
+        "executableName": "SelarasScanner.exe",
+        "installerName": "selaras-scanner-setup.exe",
+        "defaultPort": 2019,
+        "portRangeStart": 2019,
+        "portRangeEnd": 2030,
+        "allowedOrigins": [
+          "http://localhost:3000",
+          "https://selaras.app",
+          "https://app.selaras.id"
+        ],
+        "host": "127.0.0.1",
+        "agentVersion": "2.1.0",
+        "logLevel": "INFO",
+        "logToFile": true,
+        "enableMockDev": false,
+        "updatedAt": "2026-08-16T08:00:00.000Z"
+      }
+    },
+    {
+      "id": "app_perwabkeu_2026",
+      "name": "Perwabkeu Scanner",
+      "companyName": "Sistem Administrasi Perwabkeu",
+      "description": "Integrasi pemindaian bukti transaksi & kuitansi perwabkeu.",
+      "status": "active",
+      "createdAt": "2026-02-10T10:30:00.000Z",
+      "updatedAt": "2026-08-16T08:00:00.000Z",
+      "licenseId": "lic_perwabkeu_pro",
+      "configuration": {
+        "id": "cfg_perwabkeu_2026",
+        "applicationId": "app_perwabkeu_2026",
+        "executableName": "PerwabkeuScanner.exe",
+        "installerName": "perwabkeu-scanner-setup.exe",
+        "defaultPort": 2020,
+        "portRangeStart": 2019,
+        "portRangeEnd": 2030,
+        "allowedOrigins": [
+          "http://localhost:3000",
+          "https://perwabkeu.app",
+          "https://keuangan.internal.id"
+        ],
+        "host": "127.0.0.1",
+        "agentVersion": "2.1.0",
+        "logLevel": "INFO",
+        "logToFile": true,
+        "enableMockDev": false,
+        "updatedAt": "2026-08-16T08:00:00.000Z"
+      }
+    }
+  ],
+  "agentVersions": [
+    {
+      "id": "ver_2_1_0",
+      "version": "2.1.0",
+      "releaseDate": "2026-08-16",
+      "status": "latest",
+      "changelog": [
+        "Automatic port hunting & fallback if port 2019 is in use",
+        "Dynamic CORS / Allowed Origins configuration",
+        "Built-in HTTP root status dashboard at GET /",
+        "Configurable Application Identity in health check",
+        "ISO timestamped file logging with temp directory retention",
+        "COM object garbage collection optimization for WIA locks"
+      ],
+      "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "minWindowsVersion": "Windows 10 x64 / Windows 11",
+      "downloadUrl": "/downloads/scanner-agent-v2.1.0.zip",
+      "sizeBytes": 37655991
+    },
+    {
+      "id": "ver_2_0_0",
+      "version": "2.0.0",
+      "releaseDate": "2026-05-12",
+      "status": "stable",
+      "changelog": [
+        "WIA PowerShell direct script execution",
+        "Eliminated CMD multiline string escaping issues",
+        "Explicit COM object release via Marshal::ReleaseComObject"
+      ],
+      "checksum": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "minWindowsVersion": "Windows 10 x64",
+      "downloadUrl": "/downloads/scanner-agent-v2.0.0.zip",
+      "sizeBytes": 36800120
+    },
+    {
+      "id": "ver_1_0_1",
+      "version": "1.0.1",
+      "releaseDate": "2026-01-20",
+      "status": "deprecated",
+      "changelog": [
+        "Initial production release for Selaras and Perwabkeu",
+        "Fixed port lock issue with scheduled tasks"
+      ],
+      "checksum": "2c6a4e1d1f0545f470fd8bb01fc5187e1f4f5a34e0220d9ecae678d227b686d1",
+      "minWindowsVersion": "Windows 7 SP1 x64",
+      "downloadUrl": "/downloads/scanner-agent-v1.0.1.zip",
+      "sizeBytes": 35400000
+    }
+  ],
+  "installers": [
+    {
+      "id": "inst_selaras_2026",
+      "applicationId": "app_selaras_2026",
+      "applicationName": "Selaras Scanner",
+      "version": "2.1.0",
+      "executableName": "SelarasScanner.exe",
+      "installerFileName": "selaras-scanner-setup.exe",
+      "checksumSha256": "48455181e7732b380bcd19d2c7e92033ce807e59338ca952fabdc0cef87fa0e5",
+      "generatedAt": "2026-08-16T08:00:00.000Z",
+      "innoSetupScript": "; ==============================================================================\n; Inno Setup Script for Selaras Scanner\n; Application ID: app_selaras_2026\n; Version: 2.1.0\n; Generated by Scanner Platform\n; ==============================================================================\n\n#define MyAppName \"selaras-scanner-setup\"\n#define MyAppVersion \"2.1.0\"\n#define MyAppPublisher \"PT Selaras Teknologi Mandiri\"\n#define MyAppExeName \"SelarasScanner.exe\"\n#define MyAppAssocName MyAppName + \"\"\n#define MyAppAssocExt \".exe\"\n#define MyAppAssocKey StringChange(MyAppAssocName, \" \", \"\") + MyAppAssocExt\n\n[Setup]\nAppId={{97650377-A6CA-41DC-B557-212828DC8BAC}}\nAppName={#MyAppName}\nAppVersion={#MyAppVersion}\nAppPublisher={#MyAppPublisher}\nDefaultDirName={autopf}\\{#MyAppName}\nUninstallDisplayIcon={app}\\{#MyAppExeName}\nArchitecturesAllowed=x64compatible\nArchitecturesInstallIn64BitMode=x64compatible\nChangesAssociations=yes\nDisableProgramGroupPage=yes\nOutputBaseFilename=selaras-scanner-setup\nOutputDir=.\nSolidCompression=yes\nWizardStyle=modern dynamic\n\n[Languages]\nName: \"english\"; MessagesFile: \"compiler:Default.isl\"\n\n[Tasks]\nName: \"desktopicon\"; Description: \"{cm:CreateDesktopIcon}\"; GroupDescription: \"{cm:AdditionalIcons}\"; Flags: unchecked\n\n[Files]\nSource: \"dist\\{#MyAppExeName}\"; DestDir: \"{app}\"; Flags: ignoreversion\nSource: \"dist\\run.vbs\"; DestDir: \"{app}\"; Flags: ignoreversion\nSource: \"config.json\"; DestDir: \"{app}\"; Flags: ignoreversion\n\n[Registry]\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocExt}\\OpenWithProgids\"; ValueType: string; ValueName: \"{#MyAppAssocKey}\"; ValueData: \"\"; Flags: uninsdeletevalue\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocKey}\"; ValueType: string; ValueName: \"\"; ValueData: \"{#MyAppAssocName}\"; Flags: uninsdeletekey\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocKey}\\DefaultIcon\"; ValueType: string; ValueName: \"\"; ValueData: \"{app}\\{#MyAppExeName},0\"\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocKey}\\shell\\open\\command\"; ValueType: string; ValueName: \"\"; ValueData: \"\"\"{app}\\{#MyAppExeName}\"\" \"\"%1\"\"\"\n\n[Icons]\nName: \"{autoprograms}\\{#MyAppName}\"; Filename: \"{app}\\{#MyAppExeName}\"\nName: \"{autodesktop}\\{#MyAppName}\"; Filename: \"{app}\\{#MyAppExeName}\"; Tasks: desktopicon\n\n[Run]\n; Bersihkan task lama (jika ada) secara diam-diam\nFilename: \"schtasks\"; Parameters: \"/delete /tn \"\"SelarasScanner\"\" /f\"; Flags: runhidden; StatusMsg: \"Menyiapkan sistem...\"\n\n; Membuat task scheduler untuk memanggil VBS agar aplikasi berjalan otomatis saat Windows Startup\nFilename: \"schtasks\"; Parameters: \"/create /tn \"\"SelarasScanner\"\" /tr \"\"wscript.exe \"\"\"\"{app}\\run.vbs\"\"\"\"\"\" /sc onlogon /rl highest /f\"; Flags: runhidden; StatusMsg: \"Mendaftarkan background service...\"\n\n; Langsung menyalakan aplikasi VBS secara langsung saat installer selesai\nFilename: \"wscript.exe\"; Parameters: \"\"\"{app}\\run.vbs\"\"\"; Flags: runhidden; StatusMsg: \"Menjalankan Selaras Scanner...\"\n\n[UninstallRun]\n; Mematikan aplikasi dan menghapus task scheduler saat uninstall\nFilename: \"taskkill\"; Parameters: \"/F /IM SelarasScanner.exe\"; Flags: runhidden; RunOnceId: \"StopSelarasScanner\"\nFilename: \"schtasks\"; Parameters: \"/delete /tn \"\"SelarasScanner\"\" /f\"; Flags: runhidden; RunOnceId: \"DeleteSelarasScannerTask\"\n",
+      "vbsScript": "' ==============================================================================\n' Runner VBScript for Selaras Scanner (app_selaras_2026)\n' Auto-generated by Scanner Platform\n' ==============================================================================\nSet WshShell = CreateObject(\"WScript.Shell\")\nSet objFSO = CreateObject(\"Scripting.FileSystemObject\")\n\nstrFolder = objFSO.GetParentFolderName(WScript.ScriptFullName)\nWshShell.CurrentDirectory = strFolder\n\n' Execute background scanner agent without showing CMD window\nWshShell.Run chr(34) & strFolder & \"\\SelarasScanner.exe\" & Chr(34), 0, False\n\nSet WshShell = Nothing\nSet objFSO = Nothing\n",
+      "batchScript": "@echo off\nsetlocal enabledelayedexpansion\ntitle Selaras Scanner - Installer\n\n:: --- Cek hak akses Administrator ---\nnet session >nul 2>&1\nif %errorLevel% neq 0 (\n    echo.\n    echo  [!] Installer ini membutuhkan hak akses Administrator.\n    echo      Klik kanan file ini lalu pilih \"Run as administrator\"\n    echo.\n    pause\n    exit /b 1\n)\n\necho.\necho  =====================================================\necho    Selaras Scanner - Installer v2.1.0\necho    Application ID: app_selaras_2026\necho  =====================================================\necho.\necho  Menginstall scanner service...\necho.\n\n:: --- Variabel ---\nset INSTALL_DIR=C:\\SelarasScanner\\scanner\nset TASK_NAME=SelarasScanner\nset EXE_NAME=SelarasScanner.exe\nset SCRIPT_DIR=%~dp0\n\n:: --- [1/4] Buat folder instalasi ---\necho  [1/4] Menyiapkan folder instalasi...\nif not exist \"%INSTALL_DIR%\" mkdir \"%INSTALL_DIR%\"\n\n:: Copy Executable & Config\nif exist \"%SCRIPT_DIR%%EXE_NAME%\" (\n    copy /Y \"%SCRIPT_DIR%%EXE_NAME%\" \"%INSTALL_DIR%\\%EXE_NAME%\" >nul\n    echo      OK: %EXE_NAME% disalin ke %INSTALL_DIR%\n) else (\n    echo  [!] ERROR: File %EXE_NAME% tidak ditemukan.\n    pause\n    exit /b 1\n)\n\nif exist \"%SCRIPT_DIR%config.json\" (\n    copy /Y \"%SCRIPT_DIR%config.json\" \"%INSTALL_DIR%\\config.json\" >nul\n)\n\n:: --- [2/4] Bersihkan instalasi lama ---\necho.\necho  [2/4] Membersihkan instalasi lama...\nsc stop %TASK_NAME% >nul 2>&1\nsc delete %TASK_NAME% >nul 2>&1\nschtasks /delete /tn \"%TASK_NAME%\" /f >nul 2>&1\necho      OK: Instalasi lama dibersihkan.\n\n:: --- [3/4] Daftarkan via Task Scheduler ---\necho.\necho  [3/4] Mendaftarkan Task Scheduler...\nfor /f \"tokens=1\" %%u in ('whoami') do set CURRENT_USER=%%u\n\nschtasks /create /tn \"%TASK_NAME%\" ^\n    /tr \"\\\"^%INSTALL_DIR^%\\^%EXE_NAME^%\\\"\" ^\n    /sc onlogon ^\n    /rl highest ^\n    /delay 0000:10 ^\n    /f >nul 2>&1\n\nif %errorLevel% neq 0 (\n    echo  [!] ERROR: Gagal mendaftarkan Task Scheduler.\n    pause\n    exit /b 1\n)\necho      OK: Task terdaftar - otomatis start saat login.\n\n:: --- [4/4] Jalankan sekarang ---\necho.\necho  [4/4] Menjalankan service...\nschtasks /run /tn \"%TASK_NAME%\" >nul 2>&1\ntimeout /t 3 /nobreak >nul\n\n:: --- Verifikasi ---\npowershell -NoProfile -Command ^\n    \"try { $r = Invoke-WebRequest -Uri 'http://127.0.0.1:2019/health' -UseBasicParsing -TimeoutSec 5; if ($r.StatusCode -eq 200) { exit 0 } else { exit 1 } } catch { exit 1 }\" >nul 2>&1\n\nif %errorLevel% equ 0 (\n    echo.\n    echo  =====================================================\n    echo   [OK] Instalasi Selaras Scanner berhasil!\n    echo  =====================================================\n    echo.\n    echo   Scanner service berjalan di background.\n    echo   Otomatis start setiap kali Windows login.\n    echo   Cek status: http://127.0.0.1:2019/health\n    echo.\n) else (\n    echo.\n    echo  =====================================================\n    echo   [!] Service terinstall tapi belum merespons di port 2019.\n    echo  =====================================================\n    echo   Jika port lain digunakan karena port hunting, cek http://127.0.0.1/\n    echo.\n)\n\npause\nexit /b 0\n",
+      "configJson": "{\n  \"applicationId\": \"app_selaras_2026\",\n  \"applicationName\": \"Selaras Scanner\",\n  \"version\": \"2.1.0\",\n  \"executableName\": \"SelarasScanner.exe\",\n  \"installerName\": \"selaras-scanner-setup.exe\",\n  \"defaultPort\": 2019,\n  \"portRange\": [\n    2019,\n    2030\n  ],\n  \"host\": \"127.0.0.1\",\n  \"allowedOrigins\": [\n    \"http://localhost:3000\",\n    \"https://selaras.app\",\n    \"https://app.selaras.id\"\n  ],\n  \"logLevel\": \"INFO\",\n  \"logToFile\": true,\n  \"enableMockDev\": false\n}"
+    },
+    {
+      "id": "inst_9vuvamf4",
+      "applicationId": "app_perwabkeu_2026",
+      "applicationName": "Perwabkeu Scanner",
+      "version": "2.1.0",
+      "executableName": "PerwabkeuScanner.exe",
+      "installerFileName": "perwabkeu-scanner-setup.exe",
+      "checksumSha256": "68afea751445d85214a8cc3a9ecb28a2f611e1138a0b1d4f98e8d9035d62baa0",
+      "generatedAt": "2026-08-16T07:12:09.452Z",
+      "innoSetupScript": "; ==============================================================================\n; Inno Setup Script for Perwabkeu Scanner\n; Application ID: app_perwabkeu_2026\n; Version: 2.1.0\n; Generated by Scanner Platform\n; ==============================================================================\n\n#define MyAppName \"perwabkeu-scanner-setup\"\n#define MyAppVersion \"2.1.0\"\n#define MyAppPublisher \"Sistem Administrasi Perwabkeu\"\n#define MyAppExeName \"PerwabkeuScanner.exe\"\n#define MyAppAssocName MyAppName + \"\"\n#define MyAppAssocExt \".exe\"\n#define MyAppAssocKey StringChange(MyAppAssocName, \" \", \"\") + MyAppAssocExt\n\n[Setup]\nAppId={{BF071246-530F-41B4-895C-75797184C5A6}}\nAppName={#MyAppName}\nAppVersion={#MyAppVersion}\nAppPublisher={#MyAppPublisher}\nDefaultDirName={autopf}\\{#MyAppName}\nUninstallDisplayIcon={app}\\{#MyAppExeName}\nArchitecturesAllowed=x64compatible\nArchitecturesInstallIn64BitMode=x64compatible\nChangesAssociations=yes\nDisableProgramGroupPage=yes\nOutputBaseFilename=perwabkeu-scanner-setup\nOutputDir=.\nSolidCompression=yes\nWizardStyle=modern dynamic\n\n[Languages]\nName: \"english\"; MessagesFile: \"compiler:Default.isl\"\n\n[Tasks]\nName: \"desktopicon\"; Description: \"{cm:CreateDesktopIcon}\"; GroupDescription: \"{cm:AdditionalIcons}\"; Flags: unchecked\n\n[Files]\nSource: \"dist\\{#MyAppExeName}\"; DestDir: \"{app}\"; Flags: ignoreversion\nSource: \"dist\\run.vbs\"; DestDir: \"{app}\"; Flags: ignoreversion\nSource: \"config.json\"; DestDir: \"{app}\"; Flags: ignoreversion\n\n[Registry]\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocExt}\\OpenWithProgids\"; ValueType: string; ValueName: \"{#MyAppAssocKey}\"; ValueData: \"\"; Flags: uninsdeletevalue\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocKey}\"; ValueType: string; ValueName: \"\"; ValueData: \"{#MyAppAssocName}\"; Flags: uninsdeletekey\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocKey}\\DefaultIcon\"; ValueType: string; ValueName: \"\"; ValueData: \"{app}\\{#MyAppExeName},0\"\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocKey}\\shell\\open\\command\"; ValueType: string; ValueName: \"\"; ValueData: \"\"\"{app}\\{#MyAppExeName}\"\" \"\"%1\"\"\"\n\n[Icons]\nName: \"{autoprograms}\\{#MyAppName}\"; Filename: \"{app}\\{#MyAppExeName}\"\nName: \"{autodesktop}\\{#MyAppName}\"; Filename: \"{app}\\{#MyAppExeName}\"; Tasks: desktopicon\n\n[Run]\n; Bersihkan task lama (jika ada) secara diam-diam\nFilename: \"schtasks\"; Parameters: \"/delete /tn \"\"PerwabkeuScanner\"\" /f\"; Flags: runhidden; StatusMsg: \"Menyiapkan sistem...\"\n\n; Membuat task scheduler untuk memanggil VBS agar aplikasi berjalan otomatis saat Windows Startup\nFilename: \"schtasks\"; Parameters: \"/create /tn \"\"PerwabkeuScanner\"\" /tr \"\"wscript.exe \"\"\"\"{app}\\run.vbs\"\"\"\"\"\" /sc onlogon /rl highest /f\"; Flags: runhidden; StatusMsg: \"Mendaftarkan background service...\"\n\n; Langsung menyalakan aplikasi VBS secara langsung saat installer selesai\nFilename: \"wscript.exe\"; Parameters: \"\"\"{app}\\run.vbs\"\"\"; Flags: runhidden; StatusMsg: \"Menjalankan Perwabkeu Scanner...\"\n\n[UninstallRun]\n; Mematikan aplikasi dan menghapus task scheduler saat uninstall\nFilename: \"taskkill\"; Parameters: \"/F /IM PerwabkeuScanner.exe\"; Flags: runhidden; RunOnceId: \"StopPerwabkeuScanner\"\nFilename: \"schtasks\"; Parameters: \"/delete /tn \"\"PerwabkeuScanner\"\" /f\"; Flags: runhidden; RunOnceId: \"DeletePerwabkeuScannerTask\"\n",
+      "vbsScript": "' ==============================================================================\n' Runner VBScript for Perwabkeu Scanner (app_perwabkeu_2026)\n' Auto-generated by Scanner Platform\n' ==============================================================================\nSet WshShell = CreateObject(\"WScript.Shell\")\nSet objFSO = CreateObject(\"Scripting.FileSystemObject\")\n\nstrFolder = objFSO.GetParentFolderName(WScript.ScriptFullName)\nWshShell.CurrentDirectory = strFolder\n\n' Execute background scanner agent without showing CMD window\nWshShell.Run chr(34) & strFolder & \"\\PerwabkeuScanner.exe\" & Chr(34), 0, False\n\nSet WshShell = Nothing\nSet objFSO = Nothing\n",
+      "batchScript": "@echo off\nsetlocal enabledelayedexpansion\ntitle Perwabkeu Scanner - Installer\n\n:: --- Cek hak akses Administrator ---\nnet session >nul 2>&1\nif %errorLevel% neq 0 (\n    echo.\n    echo  [!] Installer ini membutuhkan hak akses Administrator.\n    echo      Klik kanan file ini lalu pilih \"Run as administrator\"\n    echo.\n    pause\n    exit /b 1\n)\n\necho.\necho  =====================================================\necho    Perwabkeu Scanner - Installer v2.1.0\necho    Application ID: app_perwabkeu_2026\necho  =====================================================\necho.\necho  Menginstall scanner service...\necho.\n\n:: --- Variabel ---\nset INSTALL_DIR=C:\\PerwabkeuScanner\\scanner\nset TASK_NAME=PerwabkeuScanner\nset EXE_NAME=PerwabkeuScanner.exe\nset SCRIPT_DIR=%~dp0\n\n:: --- [1/4] Buat folder instalasi ---\necho  [1/4] Menyiapkan folder instalasi...\nif not exist \"%INSTALL_DIR%\" mkdir \"%INSTALL_DIR%\"\n\n:: Copy Executable & Config\nif exist \"%SCRIPT_DIR%%EXE_NAME%\" (\n    copy /Y \"%SCRIPT_DIR%%EXE_NAME%\" \"%INSTALL_DIR%\\%EXE_NAME%\" >nul\n    echo      OK: %EXE_NAME% disalin ke %INSTALL_DIR%\n) else (\n    echo  [!] ERROR: File %EXE_NAME% tidak ditemukan.\n    pause\n    exit /b 1\n)\n\nif exist \"%SCRIPT_DIR%config.json\" (\n    copy /Y \"%SCRIPT_DIR%config.json\" \"%INSTALL_DIR%\\config.json\" >nul\n)\n\n:: --- [2/4] Bersihkan instalasi lama ---\necho.\necho  [2/4] Membersihkan instalasi lama...\nsc stop %TASK_NAME% >nul 2>&1\nsc delete %TASK_NAME% >nul 2>&1\nschtasks /delete /tn \"%TASK_NAME%\" /f >nul 2>&1\necho      OK: Instalasi lama dibersihkan.\n\n:: --- [3/4] Daftarkan via Task Scheduler ---\necho.\necho  [3/4] Mendaftarkan Task Scheduler...\nfor /f \"tokens=1\" %%u in ('whoami') do set CURRENT_USER=%%u\n\nschtasks /create /tn \"%TASK_NAME%\" ^\n    /tr \"\\\"^%INSTALL_DIR^%\\^%EXE_NAME^%\\\"\" ^\n    /sc onlogon ^\n    /rl highest ^\n    /delay 0000:10 ^\n    /f >nul 2>&1\n\nif %errorLevel% neq 0 (\n    echo  [!] ERROR: Gagal mendaftarkan Task Scheduler.\n    pause\n    exit /b 1\n)\necho      OK: Task terdaftar - otomatis start saat login.\n\n:: --- [4/4] Jalankan sekarang ---\necho.\necho  [4/4] Menjalankan service...\nschtasks /run /tn \"%TASK_NAME%\" >nul 2>&1\ntimeout /t 3 /nobreak >nul\n\n:: --- Verifikasi ---\npowershell -NoProfile -Command ^\n    \"try { $r = Invoke-WebRequest -Uri 'http://127.0.0.1:2020/health' -UseBasicParsing -TimeoutSec 5; if ($r.StatusCode -eq 200) { exit 0 } else { exit 1 } } catch { exit 1 }\" >nul 2>&1\n\nif %errorLevel% equ 0 (\n    echo.\n    echo  =====================================================\n    echo   [OK] Instalasi Perwabkeu Scanner berhasil!\n    echo  =====================================================\n    echo.\n    echo   Scanner service berjalan di background.\n    echo   Otomatis start setiap kali Windows login.\n    echo   Cek status: http://127.0.0.1:2020/health\n    echo.\n) else (\n    echo.\n    echo  =====================================================\n    echo   [!] Service terinstall tapi belum merespons di port 2020.\n    echo  =====================================================\n    echo   Jika port lain digunakan karena port hunting, cek http://127.0.0.1/\n    echo.\n)\n\npause\nexit /b 0\n",
+      "configJson": "{\n  \"applicationId\": \"app_perwabkeu_2026\",\n  \"applicationName\": \"Perwabkeu Scanner\",\n  \"version\": \"2.1.0\",\n  \"executableName\": \"PerwabkeuScanner.exe\",\n  \"installerName\": \"perwabkeu-scanner-setup.exe\",\n  \"defaultPort\": 2020,\n  \"portRange\": [\n    2019,\n    2030\n  ],\n  \"host\": \"127.0.0.1\",\n  \"allowedOrigins\": [\n    \"http://localhost:3000\",\n    \"https://perwabkeu.app\",\n    \"https://keuangan.internal.id\"\n  ],\n  \"logLevel\": \"INFO\",\n  \"logToFile\": true,\n  \"enableMockDev\": false\n}"
+    },
+    {
+      "id": "inst_kv9rfn7c",
+      "applicationId": "app_6zi0i8ki",
+      "applicationName": "test",
+      "version": "2.1.0",
+      "executableName": "test.exe",
+      "installerFileName": "test-Setup.exe",
+      "checksumSha256": "fc415145297f84cc572af0cc1570291384a6fbd3f9eb0ab0468e8d725176fe0b",
+      "generatedAt": "2026-08-16T08:30:23.884Z",
+      "innoSetupScript": "; ==============================================================================\n; Inno Setup Script for test\n; Application ID: app_6zi0i8ki\n; Version: 2.1.0\n; Generated by Scanner Platform\n; ==============================================================================\n\n#define MyAppName \"test-setup\"\n#define MyAppVersion \"2.1.0\"\n#define MyAppPublisher \"awdawd\"\n#define MyAppExeName \"test.exe\"\n#define MyAppAssocName MyAppName + \"\"\n#define MyAppAssocExt \".exe\"\n#define MyAppAssocKey StringChange(MyAppAssocName, \" \", \"\") + MyAppAssocExt\n\n[Setup]\nAppId={{131F345C-155D-4282-AE3E-DC9325F51436}}\nAppName={#MyAppName}\nAppVersion={#MyAppVersion}\nAppPublisher={#MyAppPublisher}\nDefaultDirName={autopf}\\{#MyAppName}\nUninstallDisplayIcon={app}\\{#MyAppExeName}\nArchitecturesAllowed=x64compatible\nArchitecturesInstallIn64BitMode=x64compatible\nChangesAssociations=yes\nDisableProgramGroupPage=yes\nOutputBaseFilename=test-Setup\nOutputDir=.\nSolidCompression=yes\nWizardStyle=modern dynamic\n\n[Languages]\nName: \"english\"; MessagesFile: \"compiler:Default.isl\"\n\n[Tasks]\nName: \"desktopicon\"; Description: \"{cm:CreateDesktopIcon}\"; GroupDescription: \"{cm:AdditionalIcons}\"; Flags: unchecked\n\n[Files]\nSource: \"dist\\{#MyAppExeName}\"; DestDir: \"{app}\"; Flags: ignoreversion\nSource: \"dist\\run.vbs\"; DestDir: \"{app}\"; Flags: ignoreversion\nSource: \"config.json\"; DestDir: \"{app}\"; Flags: ignoreversion\n\n[Registry]\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocExt}\\OpenWithProgids\"; ValueType: string; ValueName: \"{#MyAppAssocKey}\"; ValueData: \"\"; Flags: uninsdeletevalue\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocKey}\"; ValueType: string; ValueName: \"\"; ValueData: \"{#MyAppAssocName}\"; Flags: uninsdeletekey\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocKey}\\DefaultIcon\"; ValueType: string; ValueName: \"\"; ValueData: \"{app}\\{#MyAppExeName},0\"\nRoot: HKA; Subkey: \"Software\\Classes\\{#MyAppAssocKey}\\shell\\open\\command\"; ValueType: string; ValueName: \"\"; ValueData: \"\"\"{app}\\{#MyAppExeName}\"\" \"\"%1\"\"\"\n\n[Icons]\nName: \"{autoprograms}\\{#MyAppName}\"; Filename: \"{app}\\{#MyAppExeName}\"\nName: \"{autodesktop}\\{#MyAppName}\"; Filename: \"{app}\\{#MyAppExeName}\"; Tasks: desktopicon\n\n[Run]\n; Bersihkan task lama (jika ada) secara diam-diam\nFilename: \"schtasks\"; Parameters: \"/delete /tn \"\"test\"\" /f\"; Flags: runhidden; StatusMsg: \"Menyiapkan sistem...\"\n\n; Membuat task scheduler untuk memanggil VBS agar aplikasi berjalan otomatis saat Windows Startup\nFilename: \"schtasks\"; Parameters: \"/create /tn \"\"test\"\" /tr \"\"wscript.exe \"\"\"\"{app}\\run.vbs\"\"\"\"\"\" /sc onlogon /rl highest /f\"; Flags: runhidden; StatusMsg: \"Mendaftarkan background service...\"\n\n; Langsung menyalakan aplikasi VBS secara langsung saat installer selesai\nFilename: \"wscript.exe\"; Parameters: \"\"\"{app}\\run.vbs\"\"\"; Flags: runhidden; StatusMsg: \"Menjalankan test...\"\n\n[UninstallRun]\n; Mematikan aplikasi dan menghapus task scheduler saat uninstall\nFilename: \"taskkill\"; Parameters: \"/F /IM test.exe\"; Flags: runhidden; RunOnceId: \"Stoptest\"\nFilename: \"schtasks\"; Parameters: \"/delete /tn \"\"test\"\" /f\"; Flags: runhidden; RunOnceId: \"DeletetestTask\"\n",
+      "vbsScript": "' ==============================================================================\n' Runner VBScript for test (app_6zi0i8ki)\n' Auto-generated by Scanner Platform\n' ==============================================================================\nSet WshShell = CreateObject(\"WScript.Shell\")\nSet objFSO = CreateObject(\"Scripting.FileSystemObject\")\n\nstrFolder = objFSO.GetParentFolderName(WScript.ScriptFullName)\nWshShell.CurrentDirectory = strFolder\n\n' Execute background scanner agent without showing CMD window\nWshShell.Run chr(34) & strFolder & \"\\test.exe\" & Chr(34), 0, False\n\nSet WshShell = Nothing\nSet objFSO = Nothing\n",
+      "batchScript": "@echo off\nsetlocal enabledelayedexpansion\ntitle test - Installer\n\n:: --- Cek hak akses Administrator ---\nnet session >nul 2>&1\nif %errorLevel% neq 0 (\n    echo.\n    echo  [!] Installer ini membutuhkan hak akses Administrator.\n    echo      Klik kanan file ini lalu pilih \"Run as administrator\"\n    echo.\n    pause\n    exit /b 1\n)\n\necho.\necho  =====================================================\necho    test - Installer v2.1.0\necho    Application ID: app_6zi0i8ki\necho  =====================================================\necho.\necho  Menginstall scanner service...\necho.\n\n:: --- Variabel ---\nset INSTALL_DIR=C:\\test\\scanner\nset TASK_NAME=test\nset EXE_NAME=test.exe\nset SCRIPT_DIR=%~dp0\n\n:: --- [1/4] Buat folder instalasi ---\necho  [1/4] Menyiapkan folder instalasi...\nif not exist \"%INSTALL_DIR%\" mkdir \"%INSTALL_DIR%\"\n\n:: Copy Executable & Config\nif exist \"%SCRIPT_DIR%%EXE_NAME%\" (\n    copy /Y \"%SCRIPT_DIR%%EXE_NAME%\" \"%INSTALL_DIR%\\%EXE_NAME%\" >nul\n    echo      OK: %EXE_NAME% disalin ke %INSTALL_DIR%\n) else (\n    echo  [!] ERROR: File %EXE_NAME% tidak ditemukan.\n    pause\n    exit /b 1\n)\n\nif exist \"%SCRIPT_DIR%config.json\" (\n    copy /Y \"%SCRIPT_DIR%config.json\" \"%INSTALL_DIR%\\config.json\" >nul\n)\n\n:: --- [2/4] Bersihkan instalasi lama ---\necho.\necho  [2/4] Membersihkan instalasi lama...\nsc stop %TASK_NAME% >nul 2>&1\nsc delete %TASK_NAME% >nul 2>&1\nschtasks /delete /tn \"%TASK_NAME%\" /f >nul 2>&1\necho      OK: Instalasi lama dibersihkan.\n\n:: --- [3/4] Daftarkan via Task Scheduler ---\necho.\necho  [3/4] Mendaftarkan Task Scheduler...\nfor /f \"tokens=1\" %%u in ('whoami') do set CURRENT_USER=%%u\n\nschtasks /create /tn \"%TASK_NAME%\" ^\n    /tr \"\\\"^%INSTALL_DIR^%\\^%EXE_NAME^%\\\"\" ^\n    /sc onlogon ^\n    /rl highest ^\n    /delay 0000:10 ^\n    /f >nul 2>&1\n\nif %errorLevel% neq 0 (\n    echo  [!] ERROR: Gagal mendaftarkan Task Scheduler.\n    pause\n    exit /b 1\n)\necho      OK: Task terdaftar - otomatis start saat login.\n\n:: --- [4/4] Jalankan sekarang ---\necho.\necho  [4/4] Menjalankan service...\nschtasks /run /tn \"%TASK_NAME%\" >nul 2>&1\ntimeout /t 3 /nobreak >nul\n\n:: --- Verifikasi ---\npowershell -NoProfile -Command ^\n    \"try { $r = Invoke-WebRequest -Uri 'http://127.0.0.1:2019/health' -UseBasicParsing -TimeoutSec 5; if ($r.StatusCode -eq 200) { exit 0 } else { exit 1 } } catch { exit 1 }\" >nul 2>&1\n\nif %errorLevel% equ 0 (\n    echo.\n    echo  =====================================================\n    echo   [OK] Instalasi test berhasil!\n    echo  =====================================================\n    echo.\n    echo   Scanner service berjalan di background.\n    echo   Otomatis start setiap kali Windows login.\n    echo   Cek status: http://127.0.0.1:2019/health\n    echo.\n) else (\n    echo.\n    echo  =====================================================\n    echo   [!] Service terinstall tapi belum merespons di port 2019.\n    echo  =====================================================\n    echo   Jika port lain digunakan karena port hunting, cek http://127.0.0.1/\n    echo.\n)\n\npause\nexit /b 0\n",
+      "configJson": "{\n  \"applicationId\": \"app_6zi0i8ki\",\n  \"applicationName\": \"test\",\n  \"version\": \"2.1.0\",\n  \"executableName\": \"test.exe\",\n  \"installerName\": \"test-Setup.exe\",\n  \"defaultPort\": 2019,\n  \"portRange\": [\n    2019,\n    2030\n  ],\n  \"host\": \"127.0.0.1\",\n  \"allowedOrigins\": [\n    \"*\"\n  ],\n  \"logLevel\": \"INFO\",\n  \"logToFile\": true,\n  \"enableMockDev\": false\n}"
+    }
+  ],
+  "licenses": [
+    {
+      "id": "lic_selaras_ent",
+      "applicationId": "app_selaras_2026",
+      "applicationName": "Selaras Scanner",
+      "licenseKey": "SCN-ENT-8842-9901-4412-SLR",
+      "tier": "enterprise",
+      "status": "active",
+      "issuedAt": "2026-01-15T08:00:00.000Z",
+      "expiresAt": "2027-01-15T23:59:59.000Z",
+      "maxInstances": 500,
+      "currentInstances": 142
+    },
+    {
+      "id": "lic_perwabkeu_pro",
+      "applicationId": "app_perwabkeu_2026",
+      "applicationName": "Perwabkeu Scanner",
+      "licenseKey": "SCN-PRO-5512-3329-8802-PWB",
+      "tier": "professional",
+      "status": "active",
+      "issuedAt": "2026-02-10T10:30:00.000Z",
+      "expiresAt": "2027-02-10T23:59:59.000Z",
+      "maxInstances": 100,
+      "currentInstances": 38
+    },
+    {
+      "id": "lic_pcpg1n9f",
+      "applicationId": "app_6zi0i8ki",
+      "applicationName": "test",
+      "licenseKey": "SCN-STD-6033-6409-4766-APP",
+      "tier": "standard",
+      "status": "active",
+      "issuedAt": "2026-08-16T07:17:51.712Z",
+      "expiresAt": "2027-08-16T07:17:51.712Z",
+      "maxInstances": 50,
+      "currentInstances": 0
+    }
+  ],
+  "activityLogs": [
+    {
+      "id": "act_1786869023884",
+      "action": "Configuration Changed",
+      "entity": "Updated configuration for 'test'",
+      "timestamp": "2026-08-16T08:30:23.885Z",
+      "user": "User"
+    },
+    {
+      "id": "act_1786864702468",
+      "action": "Configuration Changed",
+      "entity": "Updated configuration for 'test'",
+      "timestamp": "2026-08-16T07:18:22.468Z",
+      "user": "User"
+    },
+    {
+      "id": "act_1786864671715",
+      "action": "Application Created",
+      "entity": "Created application 'test' (app_6zi0i8ki)",
+      "timestamp": "2026-08-16T07:17:51.712Z",
+      "user": "User"
+    },
+    {
+      "id": "act_1",
+      "action": "Version Release",
+      "entity": "Scanner Agent v2.1.0 released to Stable Channel",
+      "timestamp": "2026-08-16T07:30:00.000Z",
+      "user": "Admin"
+    },
+    {
+      "id": "act_2",
+      "action": "Installer Generated",
+      "entity": "selaras-scanner-setup.exe updated with multi-port fallback",
+      "timestamp": "2026-08-16T08:15:00.000Z",
+      "user": "Syahroni"
+    },
+    {
+      "id": "act_3",
+      "action": "Configuration Updated",
+      "entity": "Perwabkeu allowed origins whitelist updated",
+      "timestamp": "2026-08-16T09:00:00.000Z",
+      "user": "Syahroni"
+    }
+  ]
+}

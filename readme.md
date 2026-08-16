@@ -1,107 +1,86 @@
-# Scanner Service Documentation & Multi-App Setup Guide
+# Scanner Platform & Agent Monorepo
 
-Jembatan (bridge) lokal antara website (HTTPS) dan perangkat scanner fisik (TWAIN/WIA) pada komputer pengguna melalui localhost (`127.0.0.1:2019`).
+Platform web modern berbasis **Next.js App Router (Full-Stack Monolith)** untuk mengelola, mendistribusikan, dan memonitor **Scanner Agent** (jembatan localhost HTTP API ke scanner fisik Windows TWAIN/WIA).
 
 ---
 
-## 📁 Struktur Folder
+## 🏗 Struktur Proyek
 
 ```text
 scanner-service/
-├── service.js         # Core service Node.js
-├── package.json       # Konfigurasi dependency & build
-├── dist/              # Output hasil build (.exe & .vbs)
-│   ├── SelarasScanner.exe
-│   ├── PerwabkeuScanner.exe
-│   ├── run.vbs              # VBScript khusus Selaras
-│   └── run-perwabkeu.vbs    # VBScript khusus Perwabkeu
-```
-
-Location script Inno Setup (`.iss`):
-```text
-public/downloads/
-├── selaras-scanner.iss
-└── perwabkeu-scanner.iss
+├── scanner-platform/           # Next.js Full-Stack Monolith (Product & Config Hub)
+│   ├── src/
+│   │   ├── app/                # App Router (Thin Route Layer & API Route Handlers)
+│   │   │   ├── api/            # Backend REST API (Scanners, Config, Versions, Licenses, Auth)
+│   │   │   ├── scanners/       # Scanner Application CRUD & Detail Views
+│   │   │   ├── versions/       # Release Management & Checksums
+│   │   │   ├── licenses/       # License Key Generation & Quotas
+│   │   │   ├── diagnostics/    # Live Testing Console & Localhost Agent Probe
+│   │   │   ├── documentation/  # Interactive Developer Integration Guide
+│   │   │   └── (auth)/         # Login & Registration
+│   │   ├── features/           # Feature-Driven Architecture Modules
+│   │   │   ├── Authentication/
+│   │   │   ├── Dashboard/
+│   │   │   ├── ScannerApplication/
+│   │   │   ├── ScannerConfiguration/
+│   │   │   ├── Installer/
+│   │   │   ├── ScannerAgentVersion/
+│   │   │   ├── License/
+│   │   │   ├── Documentation/
+│   │   │   └── Diagnostics/
+│   │   ├── components/         # Primitives (Button, Modal, Card, Input, Badge, Sidebar, Navbar)
+│   │   ├── client/             # Contract-First Typed API Client & TanStack Query Hooks
+│   │   └── lib/                # Database layer (JSON persistence), Installer Generator & Utils
+│   └── package.json
+│
+├── scanner-agent/              # Standalone Scanner Agent Engine
+│   ├── service.js              # Refactored Core: Port Hunting, CORS Whitelist, WIA scan, Logging
+│   ├── config.json             # Dynamic runtime configuration
+│   ├── installer/              # Templates (.iss, .vbs, .bat)
+│   └── README.md
+│
+├── package.json                # Workspace runner scripts
+└── prd.md                      # Product Requirement Document (PRD v2.0)
 ```
 
 ---
 
-## 🛠 Panduan Membuat App/Scanner Baru (Misal: `XyzScanner`)
+## 🚀 Panduan Menjalankan
 
-Jika ada aplikasi/sistem baru yang membutuhkan installer scanner terpisah, ikuti **4 langkah wajib** ini agar installer berjalan lancar tanpa error:
+### 1. Menjalankan Scanner Platform (Web Dashboard)
 
-### 1. Build File Executable (.exe) Baru
-Jalankan perintah `pkg` dengan nama `.exe` baru:
 ```bash
-npx pkg . --output dist/XyzScanner.exe --compress GZip
+# Dari root directory
+npm run dev
+
+# Atau masuk ke folder platform
+cd scanner-platform
+npm run dev
 ```
 
-### 2. Buat File VBS Script Khusus di `dist/`
-Buat file `dist/run-xyz.vbs` yang menunjuk ke nama `.exe` baru tersebut:
-```vbscript
-' run-xyz.vbs
-Set WshShell = CreateObject("WScript.Shell")
-Set objFSO = CreateObject("Scripting.FileSystemObject")
+Buka **[http://localhost:3000](http://localhost:3000)** di browser Anda.
 
-strFolder = objFSO.GetParentFolderName(WScript.ScriptFullName)
-WshShell.CurrentDirectory = strFolder
+### 2. Menjalankan Scanner Agent (Lokal)
 
-' PASTIIN NAMA EXE DI SINI SESUAI DENGAN EXE YANG DIBUILD
-WshShell.Run chr(34) & strFolder & "\XyzScanner.exe" & Chr(34), 0, False
+```bash
+# Dari root directory
+npm run dev:agent
 
-Set WshShell = Nothing
-Set objFSO = Nothing
+# Atau masuk ke folder agent
+cd scanner-agent
+node service.js
 ```
 
-### 3. Buat File Inno Setup Script (`xyz-scanner.iss`)
-Duplikasi file `.iss` yang ada (misal `perwabkeu-scanner.iss`), lalu pastikan bagian berikut disesuaikan:
-
-1. **Variabel Nama & AppId Baru**:
-   ```iss
-   #define MyAppName "xyz-scanner-setup"
-   #define MyAppPublisher "Xyz"
-   #define MyAppExeName "XyzScanner.exe"
-
-   ; WAJIB Buat AppId / GUID Baru (Di Inno Setup: Tools -> Generate GUID)
-   AppId={{GUID-BARU-DI-SINI}
-   OutputBaseFilename=xyz-scanner
-   ```
-
-2. **Pengaturan [Files] (PENTING ⚠️)**:
-   Ambil VBS khusus aplikasi tersebut, namun **rename ke `run.vbs` saat disalin ke komputer target**:
-   ```iss
-   [Files]
-   Source: "D:\kerja\selaras_frontend\scanner-service\dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-   Source: "D:\kerja\selaras_frontend\scanner-service\dist\run-xyz.vbs"; DestDir: "{app}"; DestName: "run.vbs"; Flags: ignoreversion
-   ```
-
-3. **Pengaturan Task Scheduler [Run] & [UninstallRun]**:
-   Pastikan Nama Task (`/tn`) dan Nama Process (`/IM`) menggunakan nama unik aplikasi baru:
-   ```iss
-   [Run]
-   Filename: "schtasks"; Parameters: "/delete /tn ""XyzScanner"" /f"; Flags: runhidden; StatusMsg: "Menyiapkan sistem..."
-   Filename: "schtasks"; Parameters: "/create /tn ""XyzScanner"" /tr ""wscript.exe """"{app}\run.vbs"""""" /sc onlogon /rl highest /f"; Flags: runhidden; StatusMsg: "Mendaftarkan background service..."
-   Filename: "wscript.exe"; Parameters: """{app}\run.vbs"""; Flags: runhidden; StatusMsg: "Menjalankan Xyz Scanner..."
-
-   [UninstallRun]
-   Filename: "taskkill"; Parameters: "/F /IM XyzScanner.exe"; Flags: runhidden; RunOnceId: "StopXyzScanner"
-   Filename: "schtasks"; Parameters: "/delete /tn ""XyzScanner"" /f"; Flags: runhidden; RunOnceId: "DeleteXyzScannerTask"
-   ```
+Agent akan aktif di **`http://127.0.0.1:2019`** (otomatis hunting ke 2020, 2021 jika port sedang dipakai).
 
 ---
 
-## 🚨 Checklist Trouble Shooting & Penyebab Error Umum
+## ⚡ Fitur Utama
 
-| Error / Masalah | Penyebab | Solusi |
-| :--- | :--- | :--- |
-| **"Cannot find file / File Not Found" saat install selesai** | File VBS yang di-copy di `[Files]` masih memanggil nama `.exe` lama (`SelarasScanner.exe`). | Buat file `run-[app].vbs` baru khusus app tersebut dan gunakan `DestName: "run.vbs"` di bagian `[Files]`. |
-| **Icon Installer Error saat Compile** | Path `SetupIconFile` menggunakan lokasi file lokal komputer yang tidak ada / berubah. | Pastikan path `.ico` berada di folder project (misal `public/favicon.ico`). |
-| **Scanner lama tertimpa / konflik** | `AppId`, Task Scheduler Name (`/tn`), atau `MyAppName` di file `.iss` sama dengan aplikasi sebelumnya. | Generate `AppId` GUID baru dan gunakan Task Name unik di `[Run]` dan `[UninstallRun]`. |
-| **CORS Error di Website** | Domain website belum terdaftar di whitelist scanner. | Tambahkan origin website ke variabel `ALLOWED_ORIGINS` di `service.js` lalu re-build `.exe`. |
-
----
-
-## 📝 Catatan Maintenance Developer
-
-1. Setiap kali mengubah `service.js`, Anda harus **re-build seluruh file `.exe`** yang berhubungan (`SelarasScanner.exe`, `PerwabkeuScanner.exe`, dll).
-2. Setelah re-build `.exe`, re-compile file `.iss` menggunakan Inno Setup (**Ctrl + F9**) untuk memperbarui file installer di `public/downloads/`.
+1. **Feature-Driven Architecture**: Struktur modular `src/features/` memisahkan komponen, hook TanStack Query, model, dan section.
+2. **Dynamic Installer Generator**: Menghasilkan script Inno Setup (`.iss`), background runner (`run.vbs`), standalone batch installer (`install.bat`), dan konfigurasi JSON per aplikasi.
+3. **Multi-Port Hunting & Fallback**: Scanner Agent tidak akan crash jika port 2019 bentrok; otomatis mencari port berikutnya dalam rentang konfigurasi.
+4. **CORS / Allowed Origins Security**: Whitelist domain website pengguna secara spesifik.
+5. **Live Diagnostics & Test Console**: Uji konektivitas localhost HTTP API, deteksi perangkat WIA, dan uji scan langsung dari browser.
+6. **License Key Management**: Penerbitan lisensi per aplikasi (Standard, Pro, Enterprise) dengan masa berlaku dan batas instance.
+7. **Semantic Versioning Hub**: Tracking rilisan binary, changelog, dan verifikasi checksum SHA-256.

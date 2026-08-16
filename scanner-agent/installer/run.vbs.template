@@ -1,0 +1,12 @@
+' {{APPLICATION_NAME}} Runner VBScript
+Set WshShell = CreateObject("WScript.Shell")
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+
+strFolder = objFSO.GetParentFolderName(WScript.ScriptFullName)
+WshShell.CurrentDirectory = strFolder
+
+' Execute background scanner agent without showing CMD window
+WshShell.Run chr(34) & strFolder & "\{{EXECUTABLE_NAME}}" & Chr(34), 0, False
+
+Set WshShell = Nothing
+Set objFSO = Nothing
