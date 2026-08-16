@@ -1,0 +1,17 @@
+{
+  "name": "selaras-scanner",
+  "version": "1.0.0",
+  "description": "Selaras Scanner Service - jembatan antara browser dan printer/scanner",
+  "pkg": {
+    "targets": ["node18-win-x64"],
+    "outputPath": "dist",
+    "compress": "GZip"
+  },
+  "author": "Selaras",
+  "license": "ISC",
+  "main": "service.js",
+  "scripts": {
+    "start": "node service.js",
+    "build": "pkg service.js --target node18-win-x64 --output dist/SelarasScanner.exe --compress GZip"
+  }
+}
