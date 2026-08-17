@@ -38,7 +38,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Validate service.js syntax
-        run: node --check scanner-agent/service.js
+        run: node --check service.js
 
       - name: Validate config.json integrity
-        run: node -e "JSON.parse(require('fs').readFileSync('scanner-agent/config.json', 'utf8')); console.log('config.json is valid JSON');"
+        run: node -e "JSON.parse(require('fs').readFileSync('config.json', 'utf8')); console.log('config.json is valid JSON');"

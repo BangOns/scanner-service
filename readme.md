@@ -1,6 +1,6 @@
 # 🖨️ Scanner Agent Engine
 
-Core daemon & jembatan (*localhost HTTP bridge*) berkecepatan tinggi yang menghubungkan website modern ke scanner fisik (Windows TWAIN/WIA dan Linux SANE).
+Core daemon & jembatan (*localhost HTTP bridge*) berkecepatan tinggi yang menghubungkan website modern ke hardware scanner fisik (Windows TWAIN/WIA dan Linux SANE).
 
 ---
 
@@ -8,17 +8,17 @@ Core daemon & jembatan (*localhost HTTP bridge*) berkecepatan tinggi yang menghu
 
 ```text
 scanner-service/
-├── scanner-agent/              # Standalone Scanner Agent Engine
-│   ├── service.js              # Core: Port Hunting, CORS Whitelist, WIA/SANE Scan, Logging
-│   ├── config.json             # Dynamic runtime configuration
-│   ├── installer/              # Templates (.iss, .vbs, .bat)
-│   ├── start-linux.sh          # Quick runner Linux
-│   └── package.json
 ├── .github/
 │   └── workflows/
 │       ├── ci.yml              # CI Syntax & Integrity Validation
 │       └── release-agent.yml   # Multi-OS Automated Release (.exe & Linux ELF)
-└── package.json
+├── installer/                  # Template Installer Windows (.iss, .vbs, .bat)
+├── service.js                  # Core Engine (Port Hunting, CORS Whitelist, WIA/SANE, REST API)
+├── config.json                 # Runtime Dynamic Configuration
+├── start-linux.sh              # Quick Runner Linux/macOS (Bash/POSIX)
+├── start.fish                  # Quick Runner Fish Shell
+├── package.json                # Project & Build Scripts
+└── prd.md                      # Product Requirement Document
 ```
 
 ---
@@ -28,11 +28,10 @@ scanner-service/
 ### Menjalankan Scanner Agent (Lokal)
 
 ```bash
-# Dari root directory
-npm run start
+# Menjalankan langsung dengan npm
+npm start
 
-# Atau masuk ke folder agent
-cd scanner-agent
+# Atau langsung dengan node
 node service.js
 ```
 
@@ -57,7 +56,7 @@ npm run build:linux
 1. **`CI Pipeline` (`.github/workflows/ci.yml`)**:
    - Memvalidasi sintaks JavaScript dan integritas konfigurasi JSON pada Node 18 & 20.
 2. **`Release Scanner Agent` (`.github/workflows/release-agent.yml`)**:
-   - Berjalan otomatis saat ada tag versi (misal: `git tag v2.1.0 && git push origin v2.1.0`).
-   - Runner `windows-latest` $\rightarrow$ mengompilasi `ScannerAgent.exe` + ZIP bundle + SHA-256.
-   - Runner `ubuntu-latest` $\rightarrow$ mengompilasi `scanner-agent-linux` + tar.gz bundle + SHA-256.
+   - Berjalan otomatis saat ada tag versi (misal: `git tag v2.1.0 && git push origin v2.1.0`) atau ditrigger manual via Actions tab.
+   - Runner `windows-latest` $\rightarrow$ mengompilasi `ScannerAgent.exe` + ZIP bundle + SHA-256 checksum.
+   - Runner `ubuntu-latest` $\rightarrow$ mengompilasi `scanner-agent-linux` + tar.gz bundle + SHA-256 checksum.
    - Mengunggah semua asset ke **GitHub Releases**.

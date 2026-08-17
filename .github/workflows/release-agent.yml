@@ -43,18 +43,16 @@ jobs:
         run: npm install -g @yao-pkg/pkg
 
       - name: Validate Agent Script
-        working-directory: scanner-agent
         run: node --check service.js
 
       - name: Build ScannerAgent.exe
-        working-directory: scanner-agent
         run: |
           mkdir -p dist
           pkg service.js --target node18-win-x64 --output dist/ScannerAgent.exe --compress GZip
 
       - name: Generate SHA-256 Checksum
         shell: pwsh
-        working-directory: scanner-agent/dist
+        working-directory: dist
         run: |
           $hash = (Get-FileHash -Path "ScannerAgent.exe" -Algorithm SHA256).Hash.ToLower()
           "$hash  ScannerAgent.exe" | Out-File -FilePath "ScannerAgent.exe.sha256" -Encoding utf8
@@ -72,12 +70,12 @@ jobs:
           }
           $bundleDir = "ScannerAgent-$version-windows-x64"
           New-Item -ItemType Directory -Force -Path $bundleDir
-          Copy-Item -Path "scanner-agent/dist/ScannerAgent.exe" -Destination "$bundleDir/"
-          Copy-Item -Path "scanner-agent/dist/ScannerAgent.exe.sha256" -Destination "$bundleDir/"
-          Copy-Item -Path "scanner-agent/config.json" -Destination "$bundleDir/"
-          Copy-Item -Path "scanner-agent/README.md" -Destination "$bundleDir/"
-          if (Test-Path "scanner-agent/installer") {
-            Copy-Item -Path "scanner-agent/installer" -Destination "$bundleDir/" -Recurse
+          Copy-Item -Path "dist/ScannerAgent.exe" -Destination "$bundleDir/"
+          Copy-Item -Path "dist/ScannerAgent.exe.sha256" -Destination "$bundleDir/"
+          Copy-Item -Path "config.json" -Destination "$bundleDir/"
+          Copy-Item -Path "readme.md" -Destination "$bundleDir/"
+          if (Test-Path "installer") {
+            Copy-Item -Path "installer" -Destination "$bundleDir/" -Recurse
           }
           Compress-Archive -Path "$bundleDir/*" -DestinationPath "ScannerAgent-$version-windows-x64.zip" -Force
 
@@ -86,8 +84,8 @@ jobs:
         with:
           name: scanner-agent-windows-x64
           path: |
-            scanner-agent/dist/ScannerAgent.exe
-            scanner-agent/dist/ScannerAgent.exe.sha256
+            dist/ScannerAgent.exe
+            dist/ScannerAgent.exe.sha256
             ScannerAgent-*-windows-x64.zip
           retention-days: 7
 
@@ -109,18 +107,16 @@ jobs:
         run: sudo npm install -g @yao-pkg/pkg
 
       - name: Validate Agent Script
-        working-directory: scanner-agent
         run: node --check service.js
 
       - name: Build scanner-agent-linux
-        working-directory: scanner-agent
         run: |
           mkdir -p dist
           pkg service.js --target node18-linux-x64 --output dist/scanner-agent-linux --compress GZip
           chmod +x dist/scanner-agent-linux
 
       - name: Generate SHA-256 Checksum
-        working-directory: scanner-agent/dist
+        working-directory: dist
         run: |
           sha256sum scanner-agent-linux > scanner-agent-linux.sha256
           cat scanner-agent-linux.sha256
@@ -136,11 +132,11 @@ jobs:
           fi
           BUNDLE_DIR="ScannerAgent-${VERSION}-linux-x64"
           mkdir -p "$BUNDLE_DIR"
-          cp scanner-agent/dist/scanner-agent-linux "$BUNDLE_DIR/"
-          cp scanner-agent/dist/scanner-agent-linux.sha256 "$BUNDLE_DIR/"
-          cp scanner-agent/config.json "$BUNDLE_DIR/"
-          cp scanner-agent/README.md "$BUNDLE_DIR/"
-          cp scanner-agent/start-linux.sh "$BUNDLE_DIR/"
+          cp dist/scanner-agent-linux "$BUNDLE_DIR/"
+          cp dist/scanner-agent-linux.sha256 "$BUNDLE_DIR/"
+          cp config.json "$BUNDLE_DIR/"
+          cp readme.md "$BUNDLE_DIR/"
+          cp start-linux.sh "$BUNDLE_DIR/"
           tar -czvf "ScannerAgent-${VERSION}-linux-x64.tar.gz" -C "$BUNDLE_DIR" .
 
       - name: Upload Linux Artifacts
@@ -148,8 +144,8 @@ jobs:
         with:
           name: scanner-agent-linux-x64
           path: |
-            scanner-agent/dist/scanner-agent-linux
-            scanner-agent/dist/scanner-agent-linux.sha256
+            dist/scanner-agent-linux
+            dist/scanner-agent-linux.sha256
             ScannerAgent-*-linux-x64.tar.gz
           retention-days: 7
 

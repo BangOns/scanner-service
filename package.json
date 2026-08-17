@@ -1,12 +1,30 @@
 {
-  "name": "scanner-agent-service",
+  "name": "scanner-agent",
   "version": "2.1.0",
-  "private": true,
   "description": "Scanner Agent - Localhost Bridge for Windows TWAIN/WIA and Linux SANE",
+  "main": "service.js",
   "scripts": {
-    "start": "npm --prefix scanner-agent run start",
-    "build:win": "npm --prefix scanner-agent run build:win",
-    "build:linux": "npm --prefix scanner-agent run build:linux",
-    "build": "npm --prefix scanner-agent run build"
-  }
+    "start": "node service.js",
+    "build:win": "pkg service.js --target node18-win-x64 --output dist/ScannerAgent.exe --compress GZip",
+    "build:linux": "pkg service.js --target node18-linux-x64 --output dist/scanner-agent-linux --compress GZip",
+    "build": "npm run build:win"
+  },
+  "pkg": {
+    "targets": [
+      "node18-win-x64",
+      "node18-linux-x64"
+    ],
+    "outputPath": "dist",
+    "compress": "GZip"
+  },
+  "keywords": [
+    "scanner",
+    "wia",
+    "twain",
+    "sane",
+    "bridge",
+    "selaras",
+    "perwabkeu"
+  ],
+  "license": "Proprietary"
 }
