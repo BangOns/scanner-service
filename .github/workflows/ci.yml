@@ -1,0 +1,44 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - staging
+      - develop
+      - rebuild-to-platform
+  pull_request:
+    branches:
+      - main
+      - master
+      - staging
+      - develop
+      - rebuild-to-platform
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-agent:
+    name: Scanner Agent Validation
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Validate service.js syntax
+        run: node --check service.js
+
+      - name: Validate config.json integrity
+        run: node -e "JSON.parse(require('fs').readFileSync('config.json', 'utf8')); console.log('config.json is valid JSON');"

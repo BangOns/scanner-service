@@ -1,0 +1,56 @@
+; Script generated for {{APPLICATION_NAME}}
+; Scanner Platform — Automated Inno Setup Script
+
+#define MyAppName "{{APPLICATION_NAME_SLUG}}-setup"
+#define MyAppVersion "{{VERSION}}"
+#define MyAppPublisher "{{COMPANY_NAME}}"
+#define MyAppExeName "{{EXECUTABLE_NAME}}"
+#define MyAppAssocName MyAppName + ""
+#define MyAppAssocExt ".exe"
+#define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
+
+[Setup]
+AppId={{ {{GUID}} }
+AppName={#MyAppName}
+AppVersion={#MyAppVersion}
+AppPublisher={#MyAppPublisher}
+DefaultDirName={autopf}\{#MyAppName}
+UninstallDisplayIcon={app}\{#MyAppExeName}
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+ChangesAssociations=yes
+DisableProgramGroupPage=yes
+OutputBaseFilename={{INSTALLER_NAME_NO_EXT}}
+OutputDir=.
+SolidCompression=yes
+WizardStyle=modern dynamic
+
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl"
+
+[Tasks]
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+
+[Files]
+Source: "dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "dist\run.vbs"; DestDir: "{app}"; Flags: ignoreversion
+Source: "config.json"; DestDir: "{app}"; Flags: ignoreversion
+
+[Registry]
+Root: HKA; Subkey: "Software\Classes\{#MyAppAssocExt}\OpenWithProgids"; ValueType: string; ValueName: "{#MyAppAssocKey}"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}"; ValueType: string; ValueName: ""; ValueData: "{#MyAppAssocName}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\{#MyAppExeName},0"
+Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""
+
+[Icons]
+Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+
+[Run]
+Filename: "schtasks"; Parameters: "/delete /tn ""{{TASK_NAME}}"" /f"; Flags: runhidden; StatusMsg: "Menyiapkan sistem..."
+Filename: "schtasks"; Parameters: "/create /tn ""{{TASK_NAME}}"" /tr ""wscript.exe """"{app}\run.vbs"""""" /sc onlogon /rl highest /f"; Flags: runhidden; StatusMsg: "Mendaftarkan background service..."
+Filename: "wscript.exe"; Parameters: """{app}\run.vbs"""; Flags: runhidden; StatusMsg: "Menjalankan {{APPLICATION_NAME}}..."
+
+[UninstallRun]
+Filename: "taskkill"; Parameters: "/F /IM {{EXECUTABLE_NAME}}"; Flags: runhidden; RunOnceId: "Stop{{TASK_NAME}}"
+Filename: "schtasks"; Parameters: "/delete /tn ""{{TASK_NAME}}"" /f"; Flags: runhidden; RunOnceId: "Delete{{TASK_NAME}}Task"
