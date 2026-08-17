@@ -5,14 +5,14 @@
   "main": "service.js",
   "scripts": {
     "start": "node service.js",
-    "build:win": "pkg service.js --target node18-win-x64 --output dist/ScannerAgent.exe --compress GZip",
-    "build:linux": "pkg service.js --target node18-linux-x64 --output dist/scanner-agent-linux --compress GZip",
+    "build:win": "pkg service.js --target node22.23.2-win-x64 --output dist/ScannerAgent.exe --compress GZip",
+    "build:linux": "pkg service.js --target node22.23.2-linux-x64 --output dist/scanner-agent-linux --compress GZip",
     "build": "npm run build:win"
   },
   "pkg": {
     "targets": [
-      "node18-win-x64",
-      "node18-linux-x64"
+      "node22.23.2-win-x64",
+      "node22.23.2-linux-x64"
     ],
     "outputPath": "dist",
     "compress": "GZip"

@@ -48,7 +48,7 @@ jobs:
       - name: Build ScannerAgent.exe
         run: |
           mkdir -p dist
-          pkg service.js --target node18-win-x64 --output dist/ScannerAgent.exe --compress GZip
+          pkg service.js --target node22.23.2-win-x64 --output dist/ScannerAgent.exe --compress GZip
 
       - name: Generate SHA-256 Checksum
         shell: pwsh
@@ -112,7 +112,7 @@ jobs:
       - name: Build scanner-agent-linux
         run: |
           mkdir -p dist
-          pkg service.js --target node18-linux-x64 --output dist/scanner-agent-linux --compress GZip
+          pkg service.js --target node22.23.2-linux-x64 --output dist/scanner-agent-linux --compress GZip
           chmod +x dist/scanner-agent-linux
 
       - name: Generate SHA-256 Checksum
