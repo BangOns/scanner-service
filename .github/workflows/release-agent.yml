@@ -39,8 +39,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install Build Tool (pkg)
-        run: npm install -g @yao-pkg/pkg
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Validate Agent Script
         run: node --check service.js
@@ -48,7 +48,7 @@ jobs:
       - name: Build ScannerAgent.exe
         run: |
           mkdir -p dist
-          pkg service.js --target node22.23.2-win-x64 --output dist/ScannerAgent.exe --compress GZip
+          npx @yao-pkg/pkg service.js --target node22.23.2-win-x64 --output dist/ScannerAgent.exe --compress GZip
 
       - name: Generate SHA-256 Checksum
         shell: pwsh
@@ -103,8 +103,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install Build Tool (pkg)
-        run: sudo npm install -g @yao-pkg/pkg
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Validate Agent Script
         run: node --check service.js
@@ -112,7 +112,7 @@ jobs:
       - name: Build scanner-agent-linux
         run: |
           mkdir -p dist
-          pkg service.js --target node22.23.2-linux-x64 --output dist/scanner-agent-linux --compress GZip
+          npx @yao-pkg/pkg service.js --target node22.23.2-linux-x64 --output dist/scanner-agent-linux --compress GZip
           chmod +x dist/scanner-agent-linux
 
       - name: Generate SHA-256 Checksum
