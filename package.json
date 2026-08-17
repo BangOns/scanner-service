@@ -1,0 +1,12 @@
+{
+  "name": "scanner-agent-service",
+  "version": "2.1.0",
+  "private": true,
+  "description": "Scanner Agent - Localhost Bridge for Windows TWAIN/WIA and Linux SANE",
+  "scripts": {
+    "start": "npm --prefix scanner-agent run start",
+    "build:win": "npm --prefix scanner-agent run build:win",
+    "build:linux": "npm --prefix scanner-agent run build:linux",
+    "build": "npm --prefix scanner-agent run build"
+  }
+}

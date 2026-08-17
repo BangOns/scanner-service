@@ -121,60 +121,115 @@ function getScanOutputDir() {
 
 // ─── 4. Device Discovery (WIA) ────────────────────────────────────────────────
 
-// function untuk mendeteksi scanner fisik yang terhubung ke PC via interface WIA
+// function untuk mendeteksi scanner fisik yang terhubung ke PC (WIA di Windows, SANE di Linux)
 async function getDevices() {
-  if (os.platform() !== "win32") {
-    log("INFO", "Non-Windows environment detected: returning mock scanner devices for local development.");
-    return [
-      {
-        DeviceID: "{6BDD1FC6-810F-11D0-BEC7-08002BE2092F}\\0000",
-        Name: "EPSON L385 Series (WIA Virtual Dev)",
-      },
-      {
-        DeviceID: "{6BDD1FC6-810F-11D0-BEC7-08002BE2092F}\\0001",
-        Name: "HP ScanJet Pro 2500 f1 (WIA Virtual Dev)",
-      },
-    ];
+  // 1. Windows: Gunakan WIA COM Object via PowerShell
+  if (os.platform() === "win32") {
+    const psCommand = `powershell -ExecutionPolicy Bypass -Command "$wia = New-Object -ComObject WIA.DeviceManager; $wia.DeviceInfos | Select-Object -Property DeviceID, @{Name='Name';Expression={$_.Properties('Name').Value}} | ConvertTo-Json -Compress"`;
+    try {
+      const { stdout } = await execPromise(psCommand);
+      if (!stdout.trim() || stdout.trim() === "[]") return [];
+      const data = JSON.parse(stdout.trim());
+      return Array.isArray(data) ? data : [data];
+    } catch (err) {
+      log("ERROR", "Failed to query WIA devices on Windows:", err.message);
+      return [];
+    }
   }
 
-  const psCommand = `powershell -ExecutionPolicy Bypass -Command "$wia = New-Object -ComObject WIA.DeviceManager; $wia.DeviceInfos | Select-Object -Property DeviceID, @{Name='Name';Expression={$_.Properties('Name').Value}} | ConvertTo-Json -Compress"`;
+  // 2. Linux: Gunakan SANE scanimage utility
   try {
-    const { stdout } = await execPromise(psCommand);
-    if (!stdout.trim() || stdout.trim() === "[]") return [];
-    const data = JSON.parse(stdout.trim());
-    return Array.isArray(data) ? data : [data];
+    const { stdout } = await execPromise('scanimage -f "%d|%v %m%n"');
+    const lines = stdout.split("\n").map(l => l.trim()).filter(Boolean);
+    if (lines.length > 0) {
+      const saneDevices = lines.map(line => {
+        const parts = line.split("|");
+        return {
+          DeviceID: parts[0] || line,
+          Name: parts[1] ? parts[1].trim() : parts[0],
+        };
+      });
+      log("INFO", `Detected ${saneDevices.length} SANE scanner(s) on Linux.`);
+      return saneDevices;
+    }
   } catch (err) {
-    log("ERROR", "Failed to query WIA devices:", err.message);
-    return [];
+    log("INFO", "SANE scanimage query returned no devices or is not installed:", err.message);
   }
+
+  // Fallback dev virtual devices untuk testing lokal non-Windows tanpa scanner fisik
+  log("INFO", "Non-Windows environment: returning mock scanner devices for development.");
+  return [
+    {
+      DeviceID: "{6BDD1FC6-810F-11D0-BEC7-08002BE2092F}\\0000",
+      Name: "EPSON L385 Series (WIA Virtual Dev)",
+    },
+    {
+      DeviceID: "{6BDD1FC6-810F-11D0-BEC7-08002BE2092F}\\0001",
+      Name: "HP ScanJet Pro 2500 f1 (WIA Virtual Dev)",
+    },
+  ];
 }
 
 // ─── 5. Scan Process ──────────────────────────────────────────────────────────
 
-// function untuk menjalankan proses scanning dokumen fisik via WIA COM Automation
+// function untuk menjalankan proses scanning dokumen fisik (WIA Windows / SANE Linux)
 async function performScan(deviceName) {
   const timestamp = Date.now();
-  const fileName = `scan_${timestamp}.bmp`;
   const outputDir = getScanOutputDir();
-  const outputPath = path.join(outputDir, fileName);
 
   log("INFO", `Initiating scan for device: ${deviceName}`);
 
-  // Non-Windows dev fallback: create a 1x1 or sample bitmap file
+  // 1. Linux SANE Scan Execution
+  if (os.platform() !== "win32" && !deviceName.includes("Virtual Dev")) {
+    const fileName = `scan_${timestamp}.jpg`;
+    const outputPath = path.join(outputDir, fileName);
+    const saneCmd = `scanimage -d "${deviceName}" --format=jpeg -o "${outputPath}"`;
+
+    try {
+      log("INFO", `Executing SANE command: ${saneCmd}`);
+      const child = exec(saneCmd, { timeout: 90000 });
+      currentScanProcess = child;
+
+      await new Promise((resolve, reject) => {
+        let err = "";
+        child.stderr.on("data", d => (err += d));
+        child.on("close", code => {
+          currentScanProcess = null;
+          if (code === 0 && fs.existsSync(outputPath)) resolve(true);
+          else reject(new Error(err || `scanimage exited with code ${code}`));
+        });
+        child.on("error", e => {
+          currentScanProcess = null;
+          reject(e);
+        });
+      });
+
+      log("INFO", `Linux scan successful. Output generated at: ${outputPath}`);
+      return outputPath;
+    } catch (err) {
+      log("WARN", `SANE scan failed (${err.message}). Falling back to sample output.`);
+    }
+  }
+
+  // 2. Non-Windows Mock Fallback Scan Generation
   if (os.platform() !== "win32") {
+    const fileName = `scan_${timestamp}.bmp`;
+    const outputPath = path.join(outputDir, fileName);
     log("INFO", "Non-Windows mock scan generation.");
-    // 100x100 simple BMP header + pixel data
     const bmpHeader = Buffer.from([
       0x42, 0x4d, 0x36, 0x75, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x00, 0x00, 0x00, 0x28, 0x00,
       0x00, 0x00, 0x64, 0x00, 0x00, 0x00, 0x64, 0x00, 0x00, 0x00, 0x01, 0x00, 0x18, 0x00, 0x00, 0x00,
       0x00, 0x00, 0x00, 0x75, 0x00, 0x00, 0x12, 0x0b, 0x00, 0x00, 0x12, 0x0b, 0x00, 0x00, 0x00, 0x00,
       0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     ]);
-    const pixels = Buffer.alloc(100 * 100 * 3, 240); // light gray
+    const pixels = Buffer.alloc(100 * 100 * 3, 240);
     fs.writeFileSync(outputPath, Buffer.concat([bmpHeader, pixels]));
     return outputPath;
   }
 
+  // 3. Windows WIA PowerShell Execution
+  const fileName = `scan_${timestamp}.bmp`;
+  const outputPath = path.join(outputDir, fileName);
   const psScriptPath = path.join(outputDir, `scan_script_${timestamp}.ps1`);
 
   const psScriptContent = `
